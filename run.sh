@@ -51,8 +51,8 @@ case "$1" in
     ;;
   npm)
     log "npm"
-    if [[ $(npm outdated -g --depth=0) ]]; then
-      npm install -g npm@latest
+    if [[ $(npm outdated --location=global --depth=0) ]]; then
+      npm install --location=global npm@latest
     else
       logautd
     fi
