@@ -33,8 +33,9 @@ case "$1" in
     ;;
   casks)
     log "casks"
-    if [[ $(brew outdated --cask --greedy --quiet | grep -v 'font-') ]]; then
-      brew upgrade $(brew outdated --cask --greedy --quiet | grep -v 'font-')
+    packages=$(brew outdated --cask --greedy --quiet | egrep -v '^(Fetching|font-|whatsapp)')
+    if [[ $packages ]]; then
+      brew upgrade $(echo $packages)
     else
       logautd
     fi
