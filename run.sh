@@ -62,6 +62,10 @@ case "$1" in
     log "valet"
     valet install
     ;;
+  go)
+    log "go"
+    $GOPATH/bin/go-global-update
+    ;;
   *)
     echo -e "${GREEN}==>${NC} ${WHITE}Nothing to do${NC}"
     ;;
