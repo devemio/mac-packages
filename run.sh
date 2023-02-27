@@ -22,7 +22,8 @@ case "$1" in
       [[ $(git rev-parse HEAD) != $(git rev-parse @{u}) ]] && echo 1
     )
     if [[ $outdated ]]; then
-      zsh -ic "omz update --unattended"
+      # zsh -ic "omz update --unattended"
+      $ZSH/tools/upgrade.sh
     else
       logautd
     fi
@@ -64,7 +65,11 @@ case "$1" in
     ;;
   go)
     log "go"
-    $GOPATH/bin/go-global-update
+    if [[ $($GOPATH/bin/go-global-update -n | awk 'NR > 1 && $3 != "up-to-date"') ]]; then
+      $GOPATH/bin/go-global-update
+    else
+      logautd
+    fi
     ;;
   *)
     echo -e "${GREEN}==>${NC} ${WHITE}Nothing to do${NC}"
