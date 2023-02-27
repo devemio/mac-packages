@@ -64,7 +64,11 @@ case "$1" in
     ;;
   go)
     log "go"
-    $GOPATH/bin/go-global-update
+    if [[ $($GOPATH/bin/go-global-update -n | awk 'NR > 1 && $3 != "up-to-date"') ]]; then
+      $GOPATH/bin/go-global-update
+    else
+      logautd
+    fi
     ;;
   *)
     echo -e "${GREEN}==>${NC} ${WHITE}Nothing to do${NC}"
